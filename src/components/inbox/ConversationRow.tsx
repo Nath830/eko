@@ -18,10 +18,11 @@ interface ConversationRowProps {
 
 /* Une ligne de la réception.
 
-   Trois états se lisent d'un coup d'œil, sans aucun filtre :
-   — non lu   : fond menthe, liseré, nom en gras
-   — lu       : fond neutre, texte adouci
-   — ouvert   : carte surélevée
+   Le non-lu se lit à la typographie plutôt qu'à la couleur : nom en gras,
+   texte foncé, heure appuyée, logo à pleine opacité. La seule couleur est un
+   fin liseré abricot à gauche. Une ligne lue s'efface : graisse normale,
+   texte gris, logo estompé.
+
    L'étoile en haut à droite met la conversation en priorité. */
 export function ConversationRow({ conversation, isActive, onOpen }: ConversationRowProps) {
   const { labels, contacts, isPriority, togglePriority } = useEko()
@@ -39,11 +40,7 @@ export function ConversationRow({ conversation, isActive, onOpen }: Conversation
     <div
       className={cx(
         'relative flex items-start gap-3 rounded-2xl py-3.5 pr-3.5 pl-2 transition',
-        isActive
-          ? 'row-raised ring-1 ring-eko-500/30'
-          : isUnread
-            ? 'bg-eko-100/50 hover:row-raised'
-            : 'hover:row-raised',
+        isActive ? 'row-raised ring-1 ring-eko-500/30' : 'hover:row-raised',
       )}
     >
       {/* Toute la ligne est cliquable, sauf l'étoile qui passe au-dessus */}
@@ -67,8 +64,12 @@ export function ConversationRow({ conversation, isActive, onOpen }: Conversation
         />
       )}
 
+      {/* La seule touche de couleur : un liseré, sur les non-lus uniquement */}
       <span
-        className={cx('w-[3px] shrink-0 self-stretch rounded-full', isUnread ? 'bg-eko-accent' : 'bg-transparent')}
+        className={cx(
+          'my-1 w-[3px] shrink-0 self-stretch rounded-full',
+          isUnread ? 'bg-eko-accent' : 'bg-transparent',
+        )}
         aria-hidden
       />
 
@@ -76,7 +77,7 @@ export function ConversationRow({ conversation, isActive, onOpen }: Conversation
         title={conversation.title}
         size={48}
         {...conversationPhotos(conversation, contacts)}
-        className={cx('pointer-events-none', !isUnread && 'opacity-90')}
+        className={cx('pointer-events-none transition-opacity', !isUnread && 'opacity-55')}
       />
 
       <div className="pointer-events-none min-w-0 flex-1">
@@ -84,7 +85,7 @@ export function ConversationRow({ conversation, isActive, onOpen }: Conversation
           <h3
             className={cx(
               'truncate text-[15px]',
-              isUnread ? 'font-semibold text-ink-900' : 'font-normal text-ink-700',
+              isUnread ? 'font-semibold text-ink-900' : 'font-normal text-ink-500',
             )}
           >
             {conversation.title}
@@ -100,7 +101,7 @@ export function ConversationRow({ conversation, isActive, onOpen }: Conversation
           <time
             className={cx(
               'ml-auto shrink-0 text-[11.5px] tabular-nums',
-              isUnread ? 'font-semibold text-ink-900' : 'text-ink-400',
+              isUnread ? 'font-semibold text-ink-900' : 'text-ink-300',
             )}
             dateTime={latest?.sentAt}
           >
@@ -111,7 +112,7 @@ export function ConversationRow({ conversation, isActive, onOpen }: Conversation
         <p
           className={cx(
             'mt-0.5 line-clamp-2 text-[13px] leading-snug',
-            isUnread ? 'font-medium text-ink-700' : 'text-ink-400',
+            isUnread ? 'text-ink-700' : 'text-ink-300',
           )}
         >
           {conversation.ekoDigest}
@@ -147,7 +148,7 @@ export function ConversationRow({ conversation, isActive, onOpen }: Conversation
         <PlatformLogo
           platform={conversation.platform}
           size={32}
-          className={cx('pointer-events-none', !isUnread && 'opacity-60')}
+          className={cx('pointer-events-none transition-opacity', !isUnread && 'opacity-45')}
         />
       </div>
     </div>
