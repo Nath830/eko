@@ -18,10 +18,9 @@ interface ConversationRowProps {
 
 /* Une ligne de la réception.
 
-   Le non-lu se lit à la typographie plutôt qu'à la couleur : nom en gras,
-   texte foncé, heure appuyée, logo à pleine opacité. La seule couleur est un
-   fin liseré abricot à gauche. Une ligne lue s'efface : graisse normale,
-   texte gris, logo estompé.
+   Un non-lu se reconnaît à son fond menthe et à sa typographie : nom en gras,
+   texte foncé, logo à pleine opacité. Une ligne lue s'efface : graisse
+   normale, texte gris, photo et logo estompés.
 
    L'étoile en haut à droite met la conversation en priorité. */
 export function ConversationRow({ conversation, isActive, onOpen }: ConversationRowProps) {
@@ -39,8 +38,12 @@ export function ConversationRow({ conversation, isActive, onOpen }: Conversation
   return (
     <div
       className={cx(
-        'relative flex items-start gap-3 rounded-2xl py-3.5 pr-3.5 pl-2 transition',
-        isActive ? 'row-raised ring-1 ring-eko-500/30' : 'hover:row-raised',
+        'relative flex items-start gap-3 rounded-2xl px-3.5 py-3.5 transition',
+        isActive
+          ? 'row-raised ring-1 ring-eko-500/30'
+          : isUnread
+            ? 'bg-eko-100/50 hover:row-raised'
+            : 'hover:row-raised',
       )}
     >
       {/* Toute la ligne est cliquable, sauf l'étoile qui passe au-dessus */}
@@ -63,15 +66,6 @@ export function ConversationRow({ conversation, isActive, onOpen }: Conversation
           }}
         />
       )}
-
-      {/* La seule touche de couleur : un liseré, sur les non-lus uniquement */}
-      <span
-        className={cx(
-          'my-1 w-[3px] shrink-0 self-stretch rounded-full',
-          isUnread ? 'bg-eko-accent' : 'bg-transparent',
-        )}
-        aria-hidden
-      />
 
       <Avatar
         title={conversation.title}
