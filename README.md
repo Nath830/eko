@@ -1,5 +1,7 @@
 # Eko
 
+**Voir l'application : https://nath830.github.io/eko/**
+
 Prototype de démonstration d'une messagerie unifiée doublée d'un assistant :
 Gmail, WhatsApp, Slack, LinkedIn, Instagram et Teams réunis au même endroit.
 
@@ -8,6 +10,8 @@ aucune API, aucune authentification, aucun appel à un modèle d'IA : toutes les
 données et toutes les réponses « IA » sont écrites à la main dans `/src/data/`.
 Les générations s'affichent après un délai simulé de 600 à 1200 ms suivi d'une
 apparition progressive — sans cette latence, l'effet ne fonctionne pas.
+
+Le site se republie tout seul à chaque envoi sur `main`.
 
 ## Lancer le prototype
 
