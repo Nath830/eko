@@ -1,7 +1,7 @@
 # Eko
 
 Prototype de démonstration d'une messagerie unifiée doublée d'un assistant :
-Gmail, WhatsApp, Slack, LinkedIn, Instagram et SMS réunis au même endroit.
+Gmail, WhatsApp, Slack, LinkedIn, Instagram et Teams réunis au même endroit.
 
 Le prototype doit **paraître pleinement fonctionnel sans l'être**. Aucun serveur,
 aucune API, aucune authentification, aucun appel à un modèle d'IA : toutes les
