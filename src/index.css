@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+/* ----------------------------------------------------------------------------
+   THÈME Eko — clair, aéré, cartes blanches posées sur un fond gris doux
+
+   Tailwind v4 se configure ici : chaque variable devient une classe
+   (--color-ink-900 → text-ink-900, --color-card → bg-card).
+   C'est le seul endroit à modifier pour changer l'allure générale.
+---------------------------------------------------------------------------- */
+@theme {
+  --font-sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI",
+    "Helvetica Neue", Arial, sans-serif;
+  /* La géométrique du logo, réservée à la marque et aux grands titres */
+  --font-display: "Jost", "Futura", "Avenir Next", "Century Gothic", var(--font-sans);
+
+  /* Surfaces */
+  --color-ground: #eef0f5; /* fond de la page */
+  --color-card: #ffffff; /* les cartes */
+  --color-hover: #f7f8fb; /* survol discret */
+  --color-line: #e8eaf0; /* bordures */
+  --color-line-soft: #f1f2f6; /* séparateurs internes */
+
+  /* Encre */
+  --color-ink-900: #14161c; /* titres et noms */
+  --color-ink-700: #3a3f4a; /* texte courant */
+  --color-ink-500: #6a7080; /* descriptions */
+  --color-ink-400: #979daa; /* horodatages */
+  --color-ink-200: #c7cbd4; /* icônes discrètes */
+
+  /* Palette Eko : menthe #DAFFF2 et abricot #FFCAAC.
+     Les deux teintes servent aux surfaces et se mélangent en dégradé sur les
+     éléments de marque. Pour le texte et les pastilles, on utilise des
+     versions assombries, seules assez contrastées sur fond clair. */
+  --color-mint: #dafff2;
+  --color-peach: #ffcaac;
+
+  --color-eko-50: #edfbf6; /* voile menthe : fonds très pâles */
+  --color-eko-100: #dafff2; /* menthe, telle quelle */
+  --color-eko-200: #ffcaac; /* abricot, telle quelle */
+  --color-eko-500: #17a184; /* menthe assombrie : pastilles, boutons */
+  --color-eko-600: #128470; /* survol */
+  --color-eko-700: #0d6959; /* texte fort */
+  --color-eko-accent: #ef8551; /* abricot saturé : ce qui réclame l'attention */
+  --color-peach-50: #fff3ea; /* voile abricot : le fond de la réception */
+  --color-peach-100: #ffe6d7;
+
+  /* Couleurs de sens — distinctes de l'accent de marque */
+  --color-ok: #12a67c;
+  --color-warn: #d98917;
+  --color-danger: #e0483d;
+
+  /* Rien ne dépasse 300 ms sur les interactions courantes */
+  --default-transition-duration: 160ms;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+/* Suit la hauteur réelle de l'écran sur iPhone, barres Safari comprises */
+#root {
+  height: 100dvh;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-ground);
+  color: var(--color-ink-900);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: none;
+}
+
+::selection {
+  background-color: var(--color-mint);
+}
+
+/* La bille d'Eko : les deux teintes qui tournent lentement */
+@keyframes eko-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@utility eko-orb {
+  background: conic-gradient(
+    from 0deg,
+    var(--color-mint),
+    var(--color-peach),
+    #97f2d8,
+    #ffb284,
+    var(--color-mint)
+  );
+  animation: eko-orbit 7s linear infinite;
+}
+
+/* Le mélange des deux teintes : la signature d'Eko sur les éléments de marque */
+@utility bg-eko-blend {
+  background-image: linear-gradient(118deg, var(--color-mint) 0%, var(--color-peach) 100%);
+}
+
+/* Carte blanche posée sur le fond : l'élément de base de l'interface */
+@utility card {
+  background-color: var(--color-card);
+  border-radius: 22px;
+  box-shadow:
+    0 1px 2px rgb(20 22 28 / 0.04),
+    0 6px 16px -8px rgb(20 22 28 / 0.10),
+    0 24px 48px -24px rgb(20 22 28 / 0.20);
+}
+
+/* La carte qui a le premier rôle : elle se détache nettement des autres.
+   Utilisée pour la conversation ouverte, qui doit dominer l'écran. */
+@utility card-focus {
+  box-shadow:
+    0 1px 2px rgb(20 22 28 / 0.05),
+    0 10px 24px -10px rgb(20 22 28 / 0.16),
+    0 40px 72px -34px rgb(20 22 28 / 0.32);
+}
+
+/* Ligne survolée ou sélectionnée : elle se détache du reste de la liste */
+@utility row-raised {
+  background-color: var(--color-card);
+  border-radius: 16px;
+  box-shadow:
+    0 1px 3px rgb(20 22 28 / 0.06),
+    0 10px 22px -12px rgb(20 22 28 / 0.20);
+}
+
+/* Fond mêlant les deux teintes : signale un contenu produit par Eko */
+@utility surface-eko {
+  background-image: linear-gradient(118deg, #f2fdf9 0%, #fff4ec 100%);
+  border-color: color-mix(in srgb, var(--color-mint) 70%, var(--color-peach));
+}
+
+@utility scrollbar-slim {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line) transparent;
+}
+
+/* Zones sûres de l'iPhone : on ajoute l'encoche à la marge normale plutôt
+   que de la remplacer, sinon la marge disparaît sur ordinateur. */
+@utility pt-safe {
+  padding-top: calc(0.75rem + env(safe-area-inset-top));
+}
+@utility pb-safe {
+  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
