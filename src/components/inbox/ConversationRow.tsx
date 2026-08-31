@@ -18,9 +18,10 @@ interface ConversationRowProps {
 
 /* Une ligne de la réception.
 
-   Un non-lu se reconnaît à son fond menthe et à sa typographie : nom en gras,
-   texte foncé, logo à pleine opacité. Une ligne lue s'efface : graisse
-   normale, texte gris, photo et logo estompés.
+   Un non-lu se reconnaît à trois choses : le liseré abricot à gauche, le fond
+   menthe, et la typographie — nom en gras, texte foncé, logo à pleine
+   opacité. Une ligne lue s'efface : graisse normale, texte gris, photo et
+   logo estompés.
 
    L'étoile en haut à droite met la conversation en priorité. */
 export function ConversationRow({ conversation, isActive, onOpen }: ConversationRowProps) {
@@ -38,7 +39,7 @@ export function ConversationRow({ conversation, isActive, onOpen }: Conversation
   return (
     <div
       className={cx(
-        'relative flex items-start gap-3 rounded-2xl px-3.5 py-3.5 transition',
+        'relative flex items-start gap-3 rounded-2xl py-3.5 pr-3.5 pl-2 transition',
         isActive
           ? 'row-raised ring-1 ring-eko-500/30'
           : isUnread
@@ -66,6 +67,15 @@ export function ConversationRow({ conversation, isActive, onOpen }: Conversation
           }}
         />
       )}
+
+      {/* Le liseré qui signale un message pas encore ouvert */}
+      <span
+        className={cx(
+          'my-1 w-[3px] shrink-0 self-stretch rounded-full',
+          isUnread ? 'bg-eko-accent' : 'bg-transparent',
+        )}
+        aria-hidden
+      />
 
       <Avatar
         title={conversation.title}
