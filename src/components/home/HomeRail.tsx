@@ -190,7 +190,7 @@ export function HomeRail({
 
       {/* Votre photo mène aux réglages */}
       <Link to="/reglages" title="Votre profil et les réglages" className="rounded-full transition hover:opacity-80">
-        <Avatar title={USER.firstName} photo={USER.photo} size={34} />
+        <Avatar title={USER.firstName} src={USER.photoUrl} size={34} />
         <span className="sr-only">Réglages</span>
       </Link>
     </nav>

@@ -4,10 +4,12 @@
    👉 Changer le prénom affiché sur la page d'accueil se fait ici.
 ============================================================================ */
 
+import { USER_PHOTO } from '../data/userPhoto'
+
 export const USER = {
   firstName: 'Nath',
-  /** Portrait dans la planche src/data/portraits.ts */
-  photo: 5,
+  /** La photo affichée dans le rail, en bas */
+  photoUrl: USER_PHOTO,
 }
 
 /** « Bonjour » le jour, « Bonsoir » à partir de 18 h. */

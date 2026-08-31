@@ -118,7 +118,7 @@ export function ChatView({
             >
               {/* La question */}
               <div className="mb-4 flex items-start gap-3">
-                <Avatar title={USER.firstName} photo={USER.photo} size={compact ? 24 : 30} className="mt-0.5" />
+                <Avatar title={USER.firstName} src={USER.photoUrl} size={compact ? 24 : 30} className="mt-0.5" />
                 <p
                   className={cx(
                     'pt-0.5 leading-snug font-medium text-ink-900',

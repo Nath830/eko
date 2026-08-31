@@ -4,6 +4,8 @@ import { cx } from '../../lib/cx'
 interface AvatarProps {
   title: string
   size?: number
+  /** Une image précise, plutôt qu'un portrait de la planche */
+  src?: string
   /** Photo choisie explicitement (0 à 5). Sinon, choix stable d'après le nom. */
   photo?: number
   /** Deux personnes superposées, pour un groupe ou un canal */
@@ -15,7 +17,18 @@ interface AvatarProps {
 
 /** Photo de profil, découpée dans la planche de portraits.
     Un groupe se reconnaît à ses deux portraits et à sa pastille de membres. */
-export function Avatar({ title, size = 44, photo, photos, memberCount, className }: AvatarProps) {
+export function Avatar({ title, size = 44, src, photo, photos, memberCount, className }: AvatarProps) {
+  if (src) {
+    return (
+      <span
+        className={cx('inline-block shrink-0 rounded-full bg-ground bg-cover bg-center', className)}
+        style={{ width: size, height: size, backgroundImage: `url(${src})` }}
+        role="img"
+        aria-label={title}
+      />
+    )
+  }
+
   if (photos && photos.length > 1) {
     const [first, second] = photos
 

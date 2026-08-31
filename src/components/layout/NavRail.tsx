@@ -90,7 +90,7 @@ export function NavRail() {
             )
           }
         >
-          <Avatar title={USER.firstName} photo={USER.photo} size={34} />
+          <Avatar title={USER.firstName} src={USER.photoUrl} size={34} />
           <span className="sr-only">{settings.label}</span>
         </NavLink>
       )}
